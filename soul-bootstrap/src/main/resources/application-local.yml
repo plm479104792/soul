@@ -11,6 +11,12 @@ spring:
 #    nacos:
 #       discovery:
 #          server-addr: 127.0.0.1:8848
+   cloud:
+     zookeeper:
+       enabled: true
+       connect-string: dailyzk.webuy.ai:7005
+       discovery:
+         register: true
 
 management:
   health:
@@ -25,13 +31,14 @@ soul :
     dubbo :
       parameter: multi
     sync:
-        websocket :
-             urls: ws://localhost:9095/websocket
+#        websocket :
+#             urls: ws://localhost:9095/websocket
 
-#        zookeeper:
-#             url: localhost:2181
-#             sessionTimeout: 5000
-#             connectionTimeout: 2000
+        zookeeper:
+             url: dailyzk.webuy.ai:7005
+             sessionTimeout: 5000
+             connectionTimeout: 2000
+    upstream-scheduled-time: 10
 #        http:
 #             url : http://localhost:9095
 #        nacos:
@@ -40,9 +47,9 @@ soul :
 #              acm:
 #                enabled: false
 #                endpoint: acm.aliyun.com
-#                namespace: 
-#                accessKey: 
-#                secretKey: 
+#                namespace:
+#                accessKey:
+#                secretKey:
 
 
 #eureka:

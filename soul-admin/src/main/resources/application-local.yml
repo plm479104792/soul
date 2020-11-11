@@ -14,6 +14,11 @@ spring:
     username: root
     password: 229927
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: dailyredis.webuy.ai
+    port: 6379
+    password: xxzgredis
+    database: 14
 
 mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml
@@ -21,6 +26,7 @@ mybatis:
 
 
 soul:
+
   sync:
 #    websocket:
 #        enabled : true
@@ -39,6 +45,7 @@ soul:
 #        namespace:
 #        accessKey:
 #        secretKey:
+
 
 logging:
   level:

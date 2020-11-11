@@ -45,13 +45,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 public class SpringMvcClientBeanPostProcessor implements BeanPostProcessor {
-    
+
     private final ThreadPoolExecutor executorService;
-    
+
     private final String url;
-    
+
     private final SoulSpringMvcConfig soulSpringMvcConfig;
-    
+
     /**
      * Instantiates a new Soul client bean post processor.
      *
@@ -71,7 +71,7 @@ public class SpringMvcClientBeanPostProcessor implements BeanPostProcessor {
         url = adminUrl + "/soul-client/springmvc-register";
         executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
-    
+
     @Override
     public Object postProcessBeforeInitialization(@NonNull final Object bean, @NonNull final String beanName) throws BeansException {
         if (soulSpringMvcConfig.isFull()) {
@@ -103,7 +103,12 @@ public class SpringMvcClientBeanPostProcessor implements BeanPostProcessor {
         }
         return bean;
     }
-    
+
+    @Override
+    public Object postProcessAfterInitialization(@NonNull Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
     private void post(final String json) {
         try {
             String result = OkHttpTools.getInstance().post(url, json);
@@ -116,7 +121,7 @@ public class SpringMvcClientBeanPostProcessor implements BeanPostProcessor {
             log.error("cannot register soul admin param :{}", url + ":" + json);
         }
     }
-    
+
     private String buildJsonParams(final SoulSpringMvcClient soulSpringMvcClient, final String contextPath, final String prePath) {
         String appName = soulSpringMvcConfig.getAppName();
         Integer port = soulSpringMvcConfig.getPort();

@@ -33,7 +33,7 @@ import java.time.Duration;
 @EqualsAndHashCode
 public class RateLimiterConfig implements Serializable {
 
-    private Integer database = 0;
+    private Integer database = 15;
 
     private String master;
 
