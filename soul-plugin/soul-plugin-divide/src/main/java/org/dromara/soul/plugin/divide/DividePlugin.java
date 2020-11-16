@@ -49,9 +49,9 @@ import reactor.core.publisher.Mono;
  * @author xiaoyu(Myth)
  */
 public class DividePlugin extends AbstractSoulPlugin {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DividePlugin.class);
-    
+
     @Override
     protected Mono<Void> doExecute(final ServerWebExchange exchange, final SoulPluginChain chain, final SelectorData selector, final RuleData rule) {
         final SoulContext soulContext = exchange.getAttribute(Constants.CONTEXT);
@@ -78,23 +78,23 @@ public class DividePlugin extends AbstractSoulPlugin {
         exchange.getAttributes().put(Constants.HTTP_TIME_OUT, ruleHandle.getTimeout());
         return chain.execute(exchange);
     }
-    
+
     @Override
     public String named() {
         return PluginEnum.DIVIDE.getName();
     }
-    
+
     @Override
     public Boolean skip(final ServerWebExchange exchange) {
         final SoulContext soulContext = exchange.getAttribute(Constants.CONTEXT);
         return !Objects.equals(Objects.requireNonNull(soulContext).getRpcType(), RpcTypeEnum.HTTP.getName());
     }
-    
+
     @Override
     public int getOrder() {
         return PluginEnum.DIVIDE.getCode();
     }
-    
+
     private String buildDomain(final DivideUpstream divideUpstream) {
         String protocol = divideUpstream.getProtocol();
         if (StringUtils.isBlank(protocol)) {
@@ -102,14 +102,14 @@ public class DividePlugin extends AbstractSoulPlugin {
         }
         return protocol + divideUpstream.getUpstreamUrl().trim();
     }
-    
+
     private String buildRealURL(final String domain, final SoulContext soulContext, final ServerWebExchange exchange) {
         String path = domain;
         final String rewriteURI = (String) exchange.getAttributes().get(Constants.REWRITE_URI);
         if (StringUtils.isNoneBlank(rewriteURI)) {
             path = path + rewriteURI;
         } else {
-            final String realUrl = soulContext.getRealUrl();
+            final String realUrl = soulContext.getPath();
             if (StringUtils.isNoneBlank(realUrl)) {
                 path = path + realUrl;
             }

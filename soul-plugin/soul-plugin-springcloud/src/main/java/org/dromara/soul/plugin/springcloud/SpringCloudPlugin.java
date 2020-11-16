@@ -78,7 +78,7 @@ public class SpringCloudPlugin extends AbstractSoulPlugin {
             Object error = SoulResultWrap.error(SoulResultEnum.SPRINGCLOUD_SERVICEID_IS_ERROR.getCode(), SoulResultEnum.SPRINGCLOUD_SERVICEID_IS_ERROR.getMsg(), null);
             return WebFluxResultUtils.result(exchange, error);
         }
-        final URI uri = loadBalancer.reconstructURI(serviceInstance, URI.create(soulContext.getRealUrl()));
+        final URI uri = loadBalancer.reconstructURI(serviceInstance, URI.create(soulContext.getPath()));
 
         String realURL = buildRealURL(uri.toASCIIString(), soulContext.getHttpMethod(), exchange.getRequest().getURI().getQuery());
 
